@@ -23,6 +23,7 @@ abstract class AbstractService {
     public function insert(array $data)
     {
         $entity = new $this->entity($data);
+        (new Hydrator\ClassMethods())->hydrate($data, $entity);
         
         $this->em->persist($entity);
         $this->em->flush();

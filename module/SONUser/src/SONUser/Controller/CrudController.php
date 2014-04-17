@@ -52,7 +52,7 @@ abstract class CrudController extends AbstractActionController
                 $service = $this->getServiceLocator()->get($this->service);
                 $service->insert($request->getPost()->toArray());
                 
-                return $this->redirect()->toRoute($this->route,array('controller'=>$this->controller));
+                return $this->redirect()->toRoute($this->route, array('controller'=>$this->controller));
             }
         }
         

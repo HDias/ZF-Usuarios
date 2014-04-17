@@ -2,10 +2,11 @@
 namespace SONUser;
 
 use Zend\Mvc\MvcEvent;
-use Zend\Mail\Transport\Smtp as SmtpTransport;
-use Zend\Mail\Transport\SmtpOptions;
-class Module
-{
+use Zend\Mail\Transport\Smtp as SmtpTransport,
+	Zend\Mail\Transport\SmtpOptions;
+use SONUser\Auth\Adapter as AuthAdapter;
+
+class Module{
     public function getConfig()
     {
         return include __DIR__ . '/config/module.config.php';
@@ -26,19 +27,22 @@ class Module
     	return array(
     			'factories' => array(
     					'SONUser\Mail\Transport' => function($sm) {
-    					$config = $sm->get('Config');
-    
-    					$transport = new SmtpTransport;
-    					$options = new SmtpOptions($config['mail']);
-    					$transport->setOptions($options);
-    
-    					return $transport;
-    	},
-    	'SONUser\Service\User' => function($sm) {
-    	return new Service\User($sm->get('Doctrine\ORM\EntityManager'),
-    			$sm->get('SONUser\Mail\Transport'),
-    			$sm->get('View'));
-    	},
+	    					$config = $sm->get('Config');
+	    
+	    					$transport = new SmtpTransport;
+	    					$options = new SmtpOptions($config['mail']);
+	    					$transport->setOptions($options);
+	    
+	    					return $transport;
+    					},
+				    	'SONUser\Service\User' => function($sm) {
+					    	return new Service\User($sm->get('Doctrine\ORM\EntityManager'),
+					    			$sm->get('SONUser\Mail\Transport'),
+					    			$sm->get('View'));
+					    },
+    					'SONUser\Auth\Adapter' => function($sm){
+    						return new AuthAdapter($sm->get('Doctrine\ORM\EntityManager'));
+    					}
     
     	)
     	);
