@@ -10,27 +10,24 @@ use Zend\Authentication\AuthenticationService,
 
 use SONUser\Form\Login as LoginForm;
 
-class AuthController extends AbstractActionController
-{
+class AuthController extends AbstractActionController{
 
-    public function indexAction()
-    {
+    public function indexAction(){
         $form = new LoginForm;
         $error = false;
         
         $request = $this->getRequest();
         
-        if($request->isPost())
-        {
+        if($request->isPost()){
             $form->setData($request->getPost());
-            if($form->isValid())
-            {
+            if($form->isValid()){
                 $data = $request->getPost()->toArray();
-                
-                // Criando Storage para gravar sessão da authtenticação
-                $sessionStorage = new SessionStorage();
-                
                 $auth = new AuthenticationService;
+                // Criando Storage para gravar sessão da authtenticação
+                //$sessionStorage = new SessionStorage("SONUser");
+                $sessionStorage = new SessionStorage("SONUser");
+                
+                
                 $auth->setStorage($sessionStorage); // Definindo o SessionStorage para a auth
                 
                 $authAdapter = $this->getServiceLocator()->get("SONUser\Auth\Adapter");
@@ -39,8 +36,7 @@ class AuthController extends AbstractActionController
                 
                 $result = $auth->authenticate($authAdapter);
                 
-                if($result->isValid())
-                {
+                if($result->isValid()){
 
                     $user = $auth->getIdentity();
                     $user = $user['user'];
@@ -54,7 +50,12 @@ class AuthController extends AbstractActionController
             }
         }
         
-        return new ViewModel(array('form'=>$form,'error'=>$error));
+        return new ViewModel(
+        		array(
+        				'form'=>$form,
+        				'error'=>$error
+        				)
+        		);
     }
     
     public function logoutAction(){
