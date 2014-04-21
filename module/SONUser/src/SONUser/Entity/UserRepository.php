@@ -20,8 +20,7 @@ class UserRepository extends EntityRepository{
             return false;
     }
     
-    public function findArray()
-    {
+    public function findArray(){
         $users = $this->findAll();
         $a = array();
         foreach($users as $user)
