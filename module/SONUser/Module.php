@@ -33,6 +33,7 @@ class Module{
     public function validaAuth($e){
     	$auth = new AuthenticationService;
     	$auth->setStorage(new SessionStorage("SONUser"));
+    	//$auth->setStorage(new SessionStorage());
     
     	$controller = $e->getTarget();
     	$matchedRoute = $controller->getEvent()->getRouteMatch()->getMatchedRouteName();

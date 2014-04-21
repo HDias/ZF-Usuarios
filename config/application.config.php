@@ -9,7 +9,7 @@ return array(
         'DoctrineDataFixtureModule',
         'SONBase',
         'SONUser',
-        //'SONAcl',
+        'SONAcl',
         //'SONUserRest',
     ),
 

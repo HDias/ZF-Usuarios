@@ -1,66 +1,24 @@
 <?php
+
 namespace SONAcl;
 
 return array(
 		'controllers' => array(
 				'invokables' => array(
-						'SONUser\Controller\Index' => 'SONUser\Controller\IndexController',
-						'SONUser\Controller\Users' => 'SONUser\Controller\UsersController',
-            			'SONUser\Controller\Auth' => 'SONUser\Controller\AuthController',
+						'SONAcl\Controller\Roles' => 'SONAcl\Controller\RolesController',
+						'SONAcl\Controller\Resources' => 'SONAcl\Controller\ResourcesController',
+						'SONAcl\Controller\Privileges' => 'SONAcl\Controller\PrivilegesController',
 				)
 		),
 		'router' => array(
 				'routes' => array(
-						'sonuser-register' => array(
+						'sonacl-admin' => array(
 								'type' => 'Literal',
 								'options' => array(
-										'route' => '/register',
+										'route' => '/admin/acl',
 										'defaults' => array(
-												'__NAMESPACE__' => 'SONUser\Controller',
-												'controller' => 'Index',
-												'action' => 'register',
-										)
-								)
-						),
-						'sonuser-activate' => array(
-								'type' => 'Segment',
-								'options' => array(
-										'route' => '/register/activate[/:key]',
-										'defaults' => array(
-												'controller' => 'SONUser\Controller\Index',
-												'action' => 'activate'
-										)
-								)
-						),
-						'sonuser-auth' => array(
-								'type' => 'Literal',
-								'options' => array(
-										'route'=>'/auth',
-										'defaults' => array(
-												'__NAMESPACE__' => 'SONUser\Controller',
-												'controller' => 'Auth',
-												'action' => 'index'
-										)
-								)
-						),
-						'sonuser-logout' => array(
-								'type' => 'Literal',
-								'options' => array(
-										'route'=>'/auth/logout',
-										'defaults' => array(
-												'__NAMESPACE__' => 'SONUser\Controller',
-												'controller' => 'Auth',
-												'action' => 'logout'
-										)
-								)
-						),
-						'sonuser-admin' => array(
-								'type' => 'Literal',
-								'options' => array(
-										'route' => '/admin',
-										'defaults' => array(
-												'__NAMESPACE__' => 'SONUser\Controller',
-												'controller' => 'Users',
+												'__NAMESPACE__' => 'SONAcl\Controller',
+												'controller' => 'Roles',
 												'action' => 'index'
 										)
 								),
@@ -76,8 +34,8 @@ return array(
 																'id' => '\d+'
 														),
 														'defaults' => array(
-																'__NAMESPACE__' => 'SONUser\Controller',
-																'controller' => 'users'
+																'__NAMESPACE__' => 'SONAcl\Controller',
+																'controller' => 'Roles'
 														)
 												)
 										),
@@ -91,15 +49,16 @@ return array(
 																'page' => '\d+'
 														),
 														'defaults' => array(
-																'__NAMESPACE__' => 'SONUser\Controller',
-																'controller' => 'users'
+																'__NAMESPACE__' => 'SONAcl\Controller',
+																'controller' => 'Roles'
 														)
 												)
 										)
 								)
-						),
+						)
 				)
 		),
+
 		'view_manager' => array(
 				'display_not_found_reason' => true,
 				'display_exceptions' => true,
@@ -130,8 +89,6 @@ return array(
 				),
 		),
 		'data-fixture' => array(
-				'SONUser_fixture' => __DIR__ . '/../src/SONUser/Fixture',
+				'SONAcl_fixture' => __DIR__ . '/../src/SONAcl/Fixture',
 		),
-
-
 );
